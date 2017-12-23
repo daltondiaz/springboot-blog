@@ -8,7 +8,7 @@ The backend using basically in java and frontend with Vuejs.
 The project was to a alternative to:
 https://github.com/daltondiaz/spring-kotlin-blog
 
-A special thanks to @bfwg your code help a lot. See:
+A special thanks to [bfwg](https://github.com/bfwg) your code help a lot. See:
 
 https://github.com/bfwg/springboot-jwt-starter
 
@@ -36,6 +36,4 @@ https://github.com/bfwg/springboot-jwt-starter
 
 ## Resources
 
-- [Vue Auth](https://github.com/websanova/vue-auth)
 - [Secure a Spring Boot REST API With JSON Web Token + Reference to Angular Integration](https://medium.com/@nydiarra/secure-a-spring-boot-rest-api-with-json-web-token-reference-to-angular-integration-e57a25806c50)
-- [Vuejs](https://vuejs.org/)

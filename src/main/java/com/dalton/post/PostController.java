@@ -4,6 +4,7 @@ import com.dalton.tag.Tag;
 import com.dalton.user.User;
 import com.dalton.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,17 +43,20 @@ public class PostController {
     }
 
     @PostMapping("/post")
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public Post save(@RequestBody Post post){
         return postService.save(post);
     }
 
     @PutMapping("/post")
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public Post update(@RequestBody Post post) throws Exception{
         // TODO edit only the own post and test post when happened some error
         return postService.update(post);
     }
 
     @DeleteMapping("post/{id}")
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public boolean delete(@PathVariable Long id){
         return postService.delete(id);
     }
