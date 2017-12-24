@@ -1,39 +1,57 @@
 # Project build a simple blog
 
 The main idea from this project is put together some concepts like RESTFull, 
-authentication by Json Web Token, separate the development the backend and frontend and some other things.
+authentication by [Json Web Token] and separate the development from the backend and frontend.
 
-The backend using basically in java and frontend with Vuejs.
+This project is in Java and is a alternative to [SpringBoot Kotlin Blog] where is the [Vue Blog Project].
 
-The project was to a alternative to:
-https://github.com/daltondiaz/spring-kotlin-blog
-
-A special thanks to [bfwg](https://github.com/bfwg) your code help a lot. See:
-
-https://github.com/bfwg/springboot-jwt-starter
+A special thanks to [@bfwg] your code help a lot. See: [Springboot Jwt Starter].
 
 
-## Backend
+## Main Framework
 
-- PostgreSQL to management the database. You can change the database in file application.properties and add your dependence in build.gradle
-- Spring Boot
-- Jwt Authentication between backend and frontend, the responsible for this is Spring Security.
+- [PostgreSQL] to management the database. You can change the database in file application.properties and add your dependence in build.gradle.
+- [Spring Boot].
+- [jjwt - Java JWT: JSON Web Token for Java and Android]
 
+## Development
 
-## Tables
+The authentication is by JWT between backend and frontend, the responsible for this is Spring Security.
 
-- User: Like a author, but I choice use the name Author
-- Post: Its my post, have a author and many tags
-- Tag: One post can be one or more tags
-- Role: Each Author has one or more role for now can be Standard User and Administrator
+This project run in the port 8081 because the [Vue Blog Project] run in 8080, but you can change this according to you need, 
+so try it with maven installed:
+
+````
+$ mvn spring-boot:run
+````
+
+## Table
+
+- User: User from blog.
+- Post: Its my post, have a author and many tags.
+- Tag: One post can be one or more tags.
+- Role: Each Author has one or more role for now can be Standard User and Administrator.
+
+**Obs:** I put the suffix *blog_* in each table.
 
 ## Tools
 
-- [Intellij Communinty Edition](https://www.jetbrains.com/idea/download), to programming in kotlin
-- [Visual Studio Code](https://code.visualstudio.com/), to programming in js
-- [DBeaver](https://dbeaver.jkiss.org/), to access the database ( For me is the best ide to connection with database in linux)
+- [Intellij Communinty Edition]
+- [DBeaver], to access the database ( For me is the best ide to connection with database for linux)
 
 
-## Resources
+## References
 
 - [Secure a Spring Boot REST API With JSON Web Token + Reference to Angular Integration](https://medium.com/@nydiarra/secure-a-spring-boot-rest-api-with-json-web-token-reference-to-angular-integration-e57a25806c50)
+
+
+[SpringBoot Kotlin Blog]: <https://github.com/daltondiaz/spring-kotlin-blog>
+[Json Web Token]: <https://jwt.io/>
+[PostgreSQL]: <https://www.postgresql.org/>
+[Spring Boot]: <https://projects.spring.io/spring-boot/>
+[@bfwg]: <https://github.com/bfwg> 
+[Springboot Jwt Starter]: <https://github.com/bfwg/springboot-jwt-starter>
+[Vue Blog Project]: <https://github.com/daltondiaz/spring-kotlin-blog/tree/master/frontend>
+[jjwt - Java JWT: JSON Web Token for Java and Android]: <https://github.com/jwtk/jjwt>
+[Intellij Communinty Edition]: <https://www.jetbrains.com/idea/download>
+[DBeaver]: <https://dbeaver.jkiss.org/>
