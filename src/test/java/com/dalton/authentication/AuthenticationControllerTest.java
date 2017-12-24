@@ -1,5 +1,6 @@
 package com.dalton.authentication;
 
+import com.dalton.common.DeviceProvider;
 import com.dalton.common.TimeProvider;
 import com.dalton.roles.Role;
 import com.dalton.security.TokenHelper;
@@ -49,7 +50,7 @@ public class AuthenticationControllerTest {
     @Autowired
     private WebApplicationContext context;
 
-    @Autowired
+    @MockBean
     private CustomUserDetailsService userDetailsService;
 
     @MockBean
@@ -57,6 +58,10 @@ public class AuthenticationControllerTest {
 
     @Autowired
     private DeviceDummy device;
+
+    @MockBean
+    private DeviceProvider deviceProviderMock;
+
 
     @Before
     public void setup(){
@@ -74,7 +79,7 @@ public class AuthenticationControllerTest {
         user.setRoles(roles);
         user.setLastPasswordResetDate(new Timestamp(DateUtil.yesterday().getTime()));
 
-        when(this.userDetailsService.loadUserByUsername(eq("author"))).thenReturn(user);
+        when(this.userDetailsService.loadUserByUsername("author")).thenReturn(user);
 
         MockitoAnnotations.initMocks(this);
 
@@ -85,6 +90,15 @@ public class AuthenticationControllerTest {
         device.setMobile(false);
         device.setNormal(false);
         device.setTablet(false);
+    }
+
+    @Test
+    public void shouldGetEmptyTokenStateWhenGivenValidOldToken() throws Exception{
+        when(timeProviderMock.now())
+                .thenReturn(DateUtil.yesterday());
+        this.mvc.perform(post("/auth/refresh")
+                .header("Authorization", "Bearer 123"))
+                .andExpect(content().json("{access_token:null,expires_in:null}"));
     }
 
     @Test
