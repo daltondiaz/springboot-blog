@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -53,6 +55,7 @@ public class User implements UserDetails{
 		this.username = username;
 	}
 
+	@JsonIgnore
 	public String getEmail() {
 		return email;
 	}
@@ -73,10 +76,6 @@ public class User implements UserDetails{
 		this.status = status;
 	}
 
-	public List<Role> getRoles() {
-		return roles;
-	}
-
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
@@ -90,10 +89,12 @@ public class User implements UserDetails{
 	}
 
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return roles;
 	}
 	@Override
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
