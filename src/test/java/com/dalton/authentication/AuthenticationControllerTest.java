@@ -7,6 +7,7 @@ import com.dalton.security.TokenHelper;
 import com.dalton.user.User;
 import com.dalton.user.impl.CustomUserDetailsService;
 import com.dalton.utils.DeviceDummy;
+import com.dalton.utils.TokenUtils;
 import org.assertj.core.util.DateUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -83,13 +84,17 @@ public class AuthenticationControllerTest {
 
         MockitoAnnotations.initMocks(this);
 
-        ReflectionTestUtils.setField(tokenHelper,"EXPIRES_IN",60);
-        ReflectionTestUtils.setField(tokenHelper, "MOBILE_EXPIRES_IN", 120);
-        ReflectionTestUtils.setField(tokenHelper, "SECRET", "jwtblog");
+        ReflectionTestUtils.setField(tokenHelper, TokenUtils.EXPIRES_IN,60);
+        ReflectionTestUtils.setField(tokenHelper, TokenUtils.MOBILE_EXPIRES_IN, 120);
+        ReflectionTestUtils.setField(tokenHelper, TokenUtils.SECRET, "jwtblog");
 
         device.setMobile(false);
         device.setNormal(false);
         device.setTablet(false);
+    }
+
+    private String createToken(Device device){
+        return tokenHelper.generateToken(TEST_USERNAME, device);
     }
 
     @Test
@@ -113,8 +118,9 @@ public class AuthenticationControllerTest {
                 .andExpect(content().json("{access_token:null,expires_in:null}"));
     }
 
-    private String createToken(Device device){
-        return tokenHelper.generateToken(TEST_USERNAME, device);
+
+    public void shouldLoginWithSuccess(){
+
     }
 
 

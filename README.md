@@ -19,10 +19,10 @@ A special thanks to [@bfwg] your code help a lot. See: [Springboot Jwt Starter].
 The authentication is by JWT between backend and frontend, the responsible for this is Spring Security.
 
 This project run in the port 8081 because the [Vue Blog Project] run in 8080, but you can change this according to you need, 
-so try it with maven installed:
+so try it with gradle installed:
 
 ````
-$ mvn spring-boot:run
+$ gradle bootRun
 ````
 
 ## Table
