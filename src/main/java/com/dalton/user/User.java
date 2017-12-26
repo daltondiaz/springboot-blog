@@ -35,7 +35,7 @@ public class User implements UserDetails{
     @Column
     private String password;
     @Column
-    private boolean status = true;
+    private boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
@@ -68,12 +68,8 @@ public class User implements UserDetails{
 		this.password = password;
 	}
 
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public void setRoles(List<Role> roles) {
@@ -104,19 +100,19 @@ public class User implements UserDetails{
 	}
 	@Override
 	public boolean isAccountNonExpired() {
-		return false;
+		return true;
 	}
 	@Override
 	public boolean isAccountNonLocked() {
-		return false;
+		return true;
 	}
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return false;
+		return true;
 	}
 	@Override
 	public boolean isEnabled() {
-		return false;
+		return this.enabled;
 	}
 
 }

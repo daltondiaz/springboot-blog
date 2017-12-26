@@ -16,7 +16,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.mobile.device.Device;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,6 +34,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by dalton on 22/12/17.
@@ -63,6 +66,7 @@ public class AuthenticationControllerTest {
     private DeviceProvider deviceProviderMock;
 
 
+
     @Before
     public void setup(){
         mvc = MockMvcBuilders
@@ -72,6 +76,7 @@ public class AuthenticationControllerTest {
 
         User user = new User();
         user.setUsername("user");
+        user.setPassword("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra");
         Role role = new Role();
         role.setId(0l);
         role.setRoleName("STANDARD_USER");
@@ -79,7 +84,8 @@ public class AuthenticationControllerTest {
         user.setRoles(roles);
         user.setLastPasswordResetDate(new Timestamp(DateUtil.yesterday().getTime()));
 
-        when(this.userDetailsService.loadUserByUsername("author")).thenReturn(user);
+        when(this.userDetailsService.loadUserByUsername("user")).thenReturn(user);
+        //when(this.customUserDetailsService.loadUserByUsername("author")).thenReturn(user);
 
         MockitoAnnotations.initMocks(this);
 
@@ -106,7 +112,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    public void shouldNotRefresExpiredWebToken() throws Exception {
+    public void shouldNotRefreshExpiredWebToken() throws Exception {
         Date beforeSomeTime = new Date(DateUtil.now().getTime() - 15 * 1000);
         when(timeProviderMock.now())
                 .thenReturn(beforeSomeTime);
@@ -118,8 +124,14 @@ public class AuthenticationControllerTest {
     }
 
 
-    public void shouldLoginWithSuccess(){
-
+    @Test
+    public void shouldLoginWithSuccess() throws Exception {
+        device.setNormal(true);
+        when(timeProviderMock.now()).thenReturn(DateUtil.now());
+        this.mvc.perform(post("/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":\"user\",\"password\":\"123\"}"))
+        .andExpect(status().is2xxSuccessful());
     }
 
 
