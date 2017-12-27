@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class AuthenticationControllerTest {
 
-    private static final String TEST_USERNAME = "author";
+    private static final String TEST_USERNAME = "user";
     private MockMvc mvc;
 
     @Autowired
@@ -89,8 +89,8 @@ public class AuthenticationControllerTest {
 
         MockitoAnnotations.initMocks(this);
 
-        ReflectionTestUtils.setField(tokenHelper, TokenUtils.EXPIRES_IN,60);
-        ReflectionTestUtils.setField(tokenHelper, TokenUtils.MOBILE_EXPIRES_IN, 120);
+        ReflectionTestUtils.setField(tokenHelper, TokenUtils.EXPIRES_IN,100);
+        ReflectionTestUtils.setField(tokenHelper, TokenUtils.MOBILE_EXPIRES_IN, 200);
         ReflectionTestUtils.setField(tokenHelper, TokenUtils.SECRET, "jwtblog");
 
         device.setMobile(false);
