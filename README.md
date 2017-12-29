@@ -1,5 +1,7 @@
 # Project build a simple blog
 
+[![Build Status](https://travis-ci.org/daltondiaz/springboot-blog.svg?branch=master)](https://travis-ci.org/daltondiaz/springboot-blog)
+
 The main idea from this project is put together some concepts like RESTFull, 
 authentication by [Json Web Token] and separate the development from the backend and frontend.
 
@@ -10,7 +12,7 @@ A special thanks to [@bfwg] your code help a lot. See: [Springboot Jwt Starter].
 
 ## Main Framework
 
-- [PostgreSQL] to management the database. You can change the database in file application.properties and add your dependence in build.gradle.
+- ~~[PostgreSQL]~~ to management the database. You can change the database in file application.properties and add your dependence in build.gradle. I change to [H2] for now for test in [Travis-ci].
 - [Spring Boot].
 - [jjwt - Java JWT: JSON Web Token for Java and Android]
 
@@ -25,6 +27,17 @@ so try it with gradle installed:
 $ gradle bootRun
 ````
 
+and to test:
+
+````
+$ ./gradlew test
+````
+
+### Deploy
+
+- [Travis-ci] to make the build.
+
+
 ## Table
 
 - User: User from blog.
@@ -38,7 +51,6 @@ $ gradle bootRun
 
 - [Intellij Communinty Edition]
 - [DBeaver], to access the database ( For me is the best ide to connection with database for linux)
-
 
 ## References
 
@@ -55,3 +67,5 @@ $ gradle bootRun
 [jjwt - Java JWT: JSON Web Token for Java and Android]: <https://github.com/jwtk/jjwt>
 [Intellij Communinty Edition]: <https://www.jetbrains.com/idea/download>
 [DBeaver]: <https://dbeaver.jkiss.org/>
+[H2]: <http://www.h2database.com/html/main.html>
+[Travis-ci]: <https://travis-ci.org/>
