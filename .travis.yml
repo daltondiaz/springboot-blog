@@ -1,3 +1,9 @@
+# Speed up build by leveraging travis caches
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
 language: java
 jdk:
   - oraclejdk8

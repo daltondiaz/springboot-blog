@@ -4,6 +4,7 @@ import com.dalton.common.DeviceProvider;
 import com.dalton.common.TimeProvider;
 import com.dalton.roles.Role;
 import com.dalton.security.TokenHelper;
+import com.dalton.security.auth.AuthenticationController;
 import com.dalton.user.User;
 import com.dalton.user.impl.CustomUserDetailsService;
 import com.dalton.utils.DeviceDummy;
@@ -12,6 +13,7 @@ import org.assertj.core.util.DateUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,7 +67,8 @@ public class AuthenticationControllerTest {
     @MockBean
     private DeviceProvider deviceProviderMock;
 
-
+    @InjectMocks
+    private AuthenticationController authenticationController;
 
     @Before
     public void setup(){
@@ -119,7 +122,7 @@ public class AuthenticationControllerTest {
         device.setNormal(true);
         String token = createToken(device);
         this.mvc.perform(post("/auth/refresh")
-                .header("Authorization", "Bearer " + token))
+                .header("Authorization", "tim " + token))
                 .andExpect(content().json("{access_token:null,expires_in:null}"));
     }
 
