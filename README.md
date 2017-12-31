@@ -12,7 +12,8 @@ A special thanks to [@bfwg] your code help a lot. See: [Springboot Jwt Starter].
 
 ## Main Framework
 
-- ~~[PostgreSQL]~~ to management the database. You can change the database in file application.properties and add your dependence in build.gradle. I change to [H2] for now for test in [Travis-ci].
+- [PostgreSQL] run as database of dev. You can change the database in file application.properties and add your dependence in build.gradle. 
+The [H2] run as runtime for test and [Travis-ci] is responsible for the build.
 - [Spring Boot].
 - [jjwt - Java JWT: JSON Web Token for Java and Android]
 
@@ -33,9 +34,29 @@ and to test:
 $ ./gradlew test
 ````
 
+### Test
+
+Is different but here because I use PostgreSQL to development and together H2 to test, maybe in your job can be more databases: 
+
+- local (First for our tests, create new feature or correct some bug)
+- test (db where run test after build)
+- dev (development new or correct some feature)
+- production
+
+So I use the annotation **@ActiveProfiles('test')** in my classes of test for use runtime H2 database, you can see this declaration in the build.gradle
+ and to work I use **application-test.properties** to put more information.
+ 
+For development in the **application.properties** I declare my profile
+
+````
+spring.profiles.active: dev
+````
+
+This read the **application-dev.properties** where I declare the configuration of my database in PostgreSQL.
+
 ### Deploy
 
-- [Travis-ci] to make the build.
+- [Travis-ci] is responsible for the build.
 
 
 ## Table
