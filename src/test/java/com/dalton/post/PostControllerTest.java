@@ -1,7 +1,9 @@
 package com.dalton.post;
 
+import com.dalton.common.TimeProvider;
 import com.dalton.roles.Role;
 import com.dalton.security.TokenHelper;
+import com.dalton.tag.Tag;
 import com.dalton.user.User;
 import com.dalton.user.UserRepository;
 import com.dalton.user.impl.CustomUserDetailsService;
@@ -17,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.MediaType;
+import org.springframework.mobile.device.Device;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -71,6 +75,9 @@ public class PostControllerTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
 
+    @MockBean
+    private TimeProvider timeProviderMock;
+
     @Before
     public void setup(){
 
@@ -96,7 +103,7 @@ public class PostControllerTest {
 
         MockitoAnnotations.initMocks(this);
 
-        ReflectionTestUtils.setField(tokenHelper, TokenUtils.EXPIRES_IN,60);
+        ReflectionTestUtils.setField(tokenHelper, TokenUtils.EXPIRES_IN,120);
         ReflectionTestUtils.setField(tokenHelper, TokenUtils.MOBILE_EXPIRES_IN, 120);
         ReflectionTestUtils.setField(tokenHelper, TokenUtils.SECRET, "jwtblog");
 
@@ -144,6 +151,43 @@ public class PostControllerTest {
                 .perform(get("/api/v1/posts"));
 
         perform.andExpect(content().json(objectMapper.writeValueAsString(posts)));
+    }
+
+    @Test
+    public void shouldSavePost() throws Exception{
+
+        User user = (User) userDetailsService.loadUserByUsername("user");
+
+        Post post = new Post();
+        //post.setUser(user);
+        post.setId(0l);
+        post.setTitle("Post test");
+        post.setDescription("My new post from a test");
+        post.setCreationDate(new Date());
+        post.setStatus(true);
+
+        List<Tag> tags = new ArrayList<Tag>();
+        Tag tag = new Tag();
+        tag.setId(1l);
+        tags.add(tag);
+
+        post.setTags(tags);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String strPost = objectMapper.writeValueAsString(post);
+
+        device.setNormal(true);
+        when(timeProviderMock.now()).thenReturn(new Date(DateUtil.now().getTime() - 10 * 1000));
+        String token = createToken(device);
+        this.mockMvc.perform(post("/api/v1/post")
+            .header("Authorization","Bearer "+token)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(strPost))
+        .andExpect(status().is2xxSuccessful());
+    }
+
+    private String createToken(Device device){
+        return tokenHelper.generateToken("user", device);
     }
 
 

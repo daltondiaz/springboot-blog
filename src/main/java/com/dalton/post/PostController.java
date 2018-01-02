@@ -43,7 +43,7 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
+    //@PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public Post save(@RequestBody Post post){
         return postService.save(post);
     }
