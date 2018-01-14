@@ -99,8 +99,6 @@ public class PostControllerTest {
         when(this.userDetailsService.loadUserByUsername("user")).thenReturn(user);
         when(this.userRepository.findOne(1l)).thenReturn(user);
 
-
-
         MockitoAnnotations.initMocks(this);
 
         ReflectionTestUtils.setField(tokenHelper, TokenUtils.EXPIRES_IN,120);

@@ -19,16 +19,16 @@ public class TagService {
 
     private Logger log = LoggerFactory.getLogger(TagService.class);
 
-    public boolean delete(Long id){
+    public Tag delete(Long id){
         try{
             Tag tag = tagRepository.findOne(id);
             tag.setStatus(false);
-            tagRepository.save(tag);
-            return true;
-        }catch(Exception e){
+            return tagRepository.save(tag);
+
+        }catch(IllegalArgumentException e){
             log.error(e.getLocalizedMessage(), e);
         }
-        return false;
+        return null;
     }
 
     public void update(Tag tag){
