@@ -4,7 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,6 +21,7 @@ import static org.mockito.Mockito.when;
  */
 
 @RunWith(SpringRunner.class)
+@SpringBootTest
 @ActiveProfiles("test")
 public class TagServiceTest {
 
@@ -39,14 +42,14 @@ public class TagServiceTest {
         tag.setCreationDate(new Date());
 
         when(this.tagRepository.findOne(1l)).thenReturn(tag);
+
     }
 
     @Test
     public void deleteTest(){
-        Tag tag = tagRepository.findOne(1l);
         Tag tagDeleted = tagService.delete(1l);
-        assertEquals(tag.getId(), tagDeleted.getId());
-        assertEquals(tag.isStatus(), !tagDeleted.isStatus());
+        assertEquals((long) 1, (long)tagDeleted.getId());
+        assertEquals(true, !tagDeleted.isStatus());
     }
 
 }

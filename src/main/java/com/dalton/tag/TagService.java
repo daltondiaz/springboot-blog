@@ -21,9 +21,11 @@ public class TagService {
 
     public Tag delete(Long id){
         try{
+
             Tag tag = tagRepository.findOne(id);
             tag.setStatus(false);
-            return tagRepository.save(tag);
+            tagRepository.save(tag);
+            return tag;
 
         }catch(IllegalArgumentException e){
             log.error(e.getLocalizedMessage(), e);
