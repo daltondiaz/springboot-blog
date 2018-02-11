@@ -70,6 +70,8 @@ public class AuthenticationController {
         String jws = tokenHelper.generateToken( user.getUsername(), device);
         int expiresIn = tokenHelper.getExpiredIn(device);
         // Return the token
+        response.addHeader("Access-Control-Expose-Headers","Authorization");
+        response.addHeader("Authorization", "Bearer "+jws);
         return ResponseEntity.ok(new UserTokenState(jws, expiresIn));
     }
 
