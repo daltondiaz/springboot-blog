@@ -101,7 +101,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/**/*.html",
                 "/**/*.css",
                 "/**/*.js"
-            );
+            ).and()
+        .ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+        // important, without this we have many errors with:
+        // Response for preflight has invalid HTTP status code 401
 
     }
 }

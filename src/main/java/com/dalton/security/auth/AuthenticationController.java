@@ -70,12 +70,13 @@ public class AuthenticationController {
         String jws = tokenHelper.generateToken( user.getUsername(), device);
         int expiresIn = tokenHelper.getExpiredIn(device);
         // Return the token
-        response.addHeader("Access-Control-Expose-Headers","Authorization");
+      //  response.addHeader("Access-Control-Expose-Headers","Authorization");
+       // response.addHeader("Access-Control-Max-Age","600");
         response.addHeader("Authorization", "Bearer "+jws);
         return ResponseEntity.ok(new UserTokenState(jws, expiresIn));
     }
 
-    @RequestMapping(value = "/refresh", method = RequestMethod.POST)
+    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
     public ResponseEntity<?> refreshAuthenticationToken(
             HttpServletRequest request,
             HttpServletResponse response,
