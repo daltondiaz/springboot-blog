@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by dalton on 22/12/17.
@@ -18,6 +20,15 @@ public class TagService {
     private TagRepository tagRepository;
 
     private Logger log = LoggerFactory.getLogger(TagService.class);
+
+
+    public List<Tag> getAllTags(){
+        List<Tag> tags = tagRepository.findAll();
+        if(tags == null || tags.size() == 0){
+            return new ArrayList<Tag>();
+        }
+        return tags;
+    }
 
     public Tag delete(Long id){
         try{

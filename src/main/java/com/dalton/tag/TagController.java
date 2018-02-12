@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1")
 public class TagController {
 
     @Autowired
@@ -19,27 +19,27 @@ public class TagController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping("tags")
+    @GetMapping("/tags")
     public List<Tag> findAllTags(){
-        return tagRepository.findAll();
+        return tagService.getAllTags();
     }
 
-    @GetMapping("tag/{id}")
+    @GetMapping("/tag/{id}")
     public Tag findOne(@PathVariable Long id){
         return tagRepository.findOne(id);
     }
 
-    @PostMapping("tag")
+    @PostMapping("/tag")
     public Tag save(@RequestBody Tag tag){
         return tagRepository.save(tag);
     }
 
-    @PutMapping("tag")
+    @PutMapping("/tag")
     public Tag update(@RequestBody Tag tag){
         return tagRepository.save(tag);
     }
 
-    @DeleteMapping("tag/{id}")
+    @DeleteMapping("/tag/{id}")
     public Tag delete(@PathVariable Long id){
         return tagService.delete(id);
     }

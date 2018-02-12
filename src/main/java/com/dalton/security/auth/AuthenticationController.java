@@ -1,6 +1,7 @@
 package com.dalton.security.auth;
 
 import com.dalton.common.DeviceProvider;
+import com.dalton.user.UserService;
 import com.dalton.user.UserTokenState;
 import com.dalton.security.TokenHelper;
 import com.dalton.user.impl.CustomUserDetailsService;
@@ -37,6 +38,9 @@ public class AuthenticationController {
 
     @Autowired
     TokenHelper tokenHelper;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -98,6 +102,31 @@ public class AuthenticationController {
             UserTokenState userTokenState = new UserTokenState();
             return ResponseEntity.accepted().body(userTokenState);
         }
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public ResponseEntity<?> fetchUser( HttpServletRequest request,
+                           HttpServletResponse response){
+        String authToken = tokenHelper.getToken( request );
+        String username = tokenHelper.getUsernameFromToken(authToken);
+        User user = userService.findByUsername(username);
+        // TODO Create validate last token with current token
+        Map<String, Object> result = new HashMap<>();
+        result.put( "result", "success" );
+        result.put( "data", user);
+        return ResponseEntity.accepted().body(result);
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public ResponseEntity<?> logout( HttpServletRequest request,
+                                        HttpServletResponse response){
+        String authToken = tokenHelper.getToken( request );
+        String username = tokenHelper.getUsernameFromToken(authToken);
+        User user = userService.findByUsername(username);
+        Map<String, Object> result = new HashMap<>();
+        result.put( "result", "success" );
+        result.put( "msg", "Logged out Successfully.");
+        return ResponseEntity.accepted().body(result);
     }
 
     @RequestMapping(value = "/change-password", method = RequestMethod.POST)

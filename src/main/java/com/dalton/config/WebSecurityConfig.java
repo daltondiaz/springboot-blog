@@ -73,6 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         HttpMethod.GET,
                         "/api/v1/posts",
+                        "/api/v1/tags",
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js"
