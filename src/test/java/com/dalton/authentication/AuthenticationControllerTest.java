@@ -35,6 +35,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -111,7 +112,7 @@ public class AuthenticationControllerTest {
     public void shouldGetEmptyTokenStateWhenGivenValidOldToken() throws Exception{
         when(timeProviderMock.now())
                 .thenReturn(DateUtil.yesterday());
-        this.mvc.perform(post("/auth/refresh")
+        this.mvc.perform(get("/auth/refresh")
                 .header("Authorization", "Bearer 123"))
                 .andExpect(content().json("{access_token:null,expires_in:null}"));
     }
@@ -123,7 +124,7 @@ public class AuthenticationControllerTest {
                 .thenReturn(beforeSomeTime);
         device.setNormal(true);
         String token = createToken(device);
-        this.mvc.perform(post("/auth/refresh")
+        this.mvc.perform(get("/auth/refresh")
                 .header("Authorization", "tim " + token))
                 .andExpect(content().json("{access_token:null,expires_in:null}"));
     }

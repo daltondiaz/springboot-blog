@@ -74,8 +74,6 @@ public class AuthenticationController {
         String jws = tokenHelper.generateToken( user.getUsername(), device);
         int expiresIn = tokenHelper.getExpiredIn(device);
         // Return the token
-      //  response.addHeader("Access-Control-Expose-Headers","Authorization");
-       // response.addHeader("Access-Control-Max-Age","600");
         response.addHeader("Authorization", "Bearer "+jws);
         return ResponseEntity.ok(new UserTokenState(jws, expiresIn));
     }
@@ -130,7 +128,6 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/change-password", method = RequestMethod.POST)
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> changePassword(@RequestBody PasswordChanger passwordChanger) {
         userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword);
         Map<String, String> result = new HashMap<>();

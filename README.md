@@ -5,7 +5,8 @@
 The main idea from this project is put together some concepts like RESTFull, 
 authentication by [Json Web Token] and separate the development from the backend and frontend.
 
-This project is in Java and is a alternative to [SpringBoot Kotlin Blog] where is the [Vue Blog Project].
+This project is in Java and is a alternative to [SpringBoot Kotlin Blog] where the frontend is [Vue Blog Project]. 
+Obs: This project is based to communicate with [Vue-auth].
 
 A special thanks to [@bfwg] your code help a lot. See: [Springboot Jwt Starter].
 
@@ -13,7 +14,7 @@ A special thanks to [@bfwg] your code help a lot. See: [Springboot Jwt Starter].
 ## Main Framework
 
 - [PostgreSQL] run as database of dev. You can change the database in file application.properties and add your dependence in build.gradle. 
-The [H2] run as runtime for test and [Travis-ci] is responsible for the build.
+The [H2] run as runtime db for test and [Travis-ci] is responsible for the build.
 - [Spring Boot].
 - [jjwt - Java JWT: JSON Web Token for Java and Android]
 
@@ -68,6 +69,10 @@ This read the **application-dev.properties** where I declare the configuration o
 
 **Obs:** I put the suffix *blog_* in each table.
 
+## Routes
+
+Coming soon.
+
 ## Tools
 
 - [Intellij Communinty Edition]
@@ -90,3 +95,4 @@ This read the **application-dev.properties** where I declare the configuration o
 [DBeaver]: <https://dbeaver.jkiss.org/>
 [H2]: <http://www.h2database.com/html/main.html>
 [Travis-ci]: <https://travis-ci.org/>
+[Vue-auth]: <https://github.com/websanova/vue-auth>
