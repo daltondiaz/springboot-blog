@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
     private TagRepository tagRepository;
 
     private final Logger log = LoggerFactory.getLogger(PostService.class);
@@ -59,16 +61,19 @@ public class PostService {
         post.setCreationDate(new Date());
         post.setStatus(true);
 
-        List<Tag> tags = post.getTags();
-        for(Tag tag : tags){
+        List<Tag> tags = new ArrayList<Tag>();
+
+        for(Tag tag : post.getTags()){
             if(tag.getId() == 0){
                 // add new tags
                 tag.setCreationDate(new Date());
                 tag.setStatus(true);
-                tagRepository.save(tag);
+                tags.add(tagRepository.save(tag));
+            }else{
+                tags.add(tag);
             }
         }
-
+        post.setTags(tags);
         return postRepository.save(post);
     }
 }
