@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,28 +53,29 @@ public class PostService {
         return false;
     }
 
-    public Post save(Post post){
+    public Post save(Post post) throws Exception{
 
-        User user = new User();
-        // add user id
-        user.setId(1l);
-        post.setUser(user);
-        post.setCreationDate(new Date());
-        post.setStatus(true);
+        try{
+            post.setUser(post.getUser());
+            post.setCreationDate(new Date());
+            post.setStatus(true);
 
-        List<Tag> tags = new ArrayList<Tag>();
+            List<Tag> tags = new ArrayList<Tag>();
 
-        for(Tag tag : post.getTags()){
-            if(tag.getId() == 0){
-                // add new tags
-                tag.setCreationDate(new Date());
-                tag.setStatus(true);
-                tags.add(tagRepository.save(tag));
-            }else{
-                tags.add(tag);
+            for(Tag tag : post.getTags()){
+                if(tag.getId() == 0){
+                    // add new tags
+                    tag.setCreationDate(new Date());
+                    tag.setStatus(true);
+                    tags.add(tagRepository.save(tag));
+                }else{
+                    tags.add(tag);
+                }
             }
+            post.setTags(tags);
+            return postRepository.save(post);
+        }catch (NullPointerException n){
+            throw n;
         }
-        post.setTags(tags);
-        return postRepository.save(post);
     }
 }

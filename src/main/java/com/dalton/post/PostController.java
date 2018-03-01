@@ -1,5 +1,6 @@
 package com.dalton.post;
 
+import com.dalton.security.auth.JwtAuthenticationRequest;
 import com.dalton.tag.Tag;
 import com.dalton.user.User;
 import com.dalton.user.UserRepository;
@@ -28,8 +29,7 @@ public class PostController {
 
     @GetMapping("/posts")
     public List<Post> findAll(){
-        User user = userRepository.findOne(1l);
-        return postRepository.findByUserAndStatusOrderByCreationDateDesc(user, true);
+        return postRepository.findByStatusOrderByCreationDateDesc(true);
     }
 
     @PostMapping("/post/tag")
@@ -43,7 +43,7 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public Post save(@RequestBody Post post){
+    public Post save(@RequestBody Post post) throws Exception{
         return postService.save(post);
     }
 

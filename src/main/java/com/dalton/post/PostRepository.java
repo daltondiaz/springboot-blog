@@ -13,5 +13,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findByUserAndStatusOrderByCreationDateDesc(User user, boolean status);
     List<Post> findByTagsAndStatusOrderByCreationDateDesc(Tag tag, boolean status);
+    List<Post> findByStatusOrderByCreationDateDesc(boolean status);
 
 }
